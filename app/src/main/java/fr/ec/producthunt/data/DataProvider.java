@@ -121,7 +121,7 @@ public class DataProvider {
       for (int i = 0; i < arr.length(); i++) {
         Post post = new Post();
         post.setTitle(arr.getJSONObject(i).getString("name"));
-        post.setUrl(arr.getJSONObject(i).getString("discussion_urlgit rm -r --cached"));
+        post.setUrl(arr.getJSONObject(i).getString("redirect_url"));
         post.setSubTitle(arr.getJSONObject(i).getString("tagline"));
         post.setUpvotes("Upvotes" + arr.getJSONObject(i).getString("votes_count"));
         post.setUrlImage(arr.getJSONObject(i).getJSONObject("thumbnail").getString("image_url"));
