@@ -31,7 +31,6 @@ public class DetailActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            Log.d("tag", (String) extras.get("url"));
             myWebView.loadUrl((String) extras.get("url"));
         }
 

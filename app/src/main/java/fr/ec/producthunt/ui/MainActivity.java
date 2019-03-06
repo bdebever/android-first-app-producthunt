@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Post post = (Post)parent.getItemAtPosition(position);
 
         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-        //intent.putExtra("url", post.getTitle());
+        intent.putExtra("url", post.getUrl());
         startActivity(intent);
 
         Toast.makeText(MainActivity.this, post.getTitle(), Toast.LENGTH_SHORT).show();
