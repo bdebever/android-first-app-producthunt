@@ -1,5 +1,6 @@
 package fr.ec.producthunt.ui;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
                               int position, long id) {
 
         Post post = (Post)parent.getItemAtPosition(position);
+
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        //intent.putExtra("url", post.getTitle());
+        startActivity(intent);
+
         Toast.makeText(MainActivity.this, post.getTitle(), Toast.LENGTH_SHORT).show();
 
       }

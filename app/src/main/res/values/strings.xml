@@ -1,4 +1,4 @@
 <resources>
-  <string name="app_name">ProductHunt</string>
+    <string name="app_name">ProductHunt</string>
     <string name="menu_refresh_title">Actualiser</string>
 </resources>
