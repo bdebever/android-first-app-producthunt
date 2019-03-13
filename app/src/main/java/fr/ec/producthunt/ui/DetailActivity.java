@@ -2,7 +2,6 @@ package fr.ec.producthunt.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -30,8 +29,8 @@ public class DetailActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
-        if (extras != null) {
-            myWebView.loadUrl((String) extras.get("url"));
+        if (extras != null && extras.containsKey("url")) {
+            myWebView.loadUrl(extras.getString("url"));
         }
 
 

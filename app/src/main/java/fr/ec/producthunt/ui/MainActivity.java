@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_activity);
 
-    dataProvider = new DataProvider();
+    dataProvider = new DataProvider(getApplicationContext());
 
     listView = findViewById(R.id.list_item);
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -96,10 +96,12 @@ public class MainActivity extends AppCompatActivity {
     //Do on Background Thread
     @Override protected List doInBackground(String... params) {
 
-      String posts = dataProvider.getPostsFromWeb(params[0]);
-      Log.d(TAG, "doInBackground: Posts :"+posts);
+      String postsJson = dataProvider.getPostsFromWeb(params[0]);
+      List<Post> posts = dataProvider.getPostsFromJson(postsJson);
 
-      return dataProvider.getPostsFromJson(posts);
+      dataProvider.storeToDb(posts);
+
+      return posts;
     }
 
     //Do on Main Thread
@@ -109,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
 
       // Do the computation in background
       listView.setAdapter(new PostAdapter(result));
+
+
 
     }
 

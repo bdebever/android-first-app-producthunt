@@ -1,13 +1,16 @@
 package fr.ec.producthunt.data;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import fr.ec.producthunt.data.database.DataBaseContract;
+import fr.ec.producthunt.data.database.ProductHuntDbHelper;
 import fr.ec.producthunt.data.model.Post;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +24,12 @@ import java.util.List;
 import static android.content.ContentValues.TAG;
 
 public class DataProvider {
+
+  public final ProductHuntDbHelper sqliteOpenHelper;
+
+  public DataProvider(Context context) {
+    sqliteOpenHelper = new ProductHuntDbHelper(context);
+  }
 
   public List<Post> getPosts(int number) {
     List<Post> list = new ArrayList<>(number);
@@ -123,6 +132,7 @@ public class DataProvider {
         post.setTitle(arr.getJSONObject(i).getString("name"));
         post.setUrl(arr.getJSONObject(i).getString("redirect_url"));
         post.setSubTitle(arr.getJSONObject(i).getString("tagline"));
+        post.setId(arr.getJSONObject(i).getInt("id"));
         post.setUpvotes("Upvotes" + arr.getJSONObject(i).getString("votes_count"));
         post.setUrlImage(arr.getJSONObject(i).getJSONObject("thumbnail").getString("image_url"));
 
@@ -137,6 +147,38 @@ public class DataProvider {
       return null;
 
     }
+  }
+
+
+  /**
+   *
+   * @param posts
+   */
+  public void storeToDb(List<Post> posts) {
+
+    SQLiteDatabase database = sqliteOpenHelper.getWritableDatabase();
+
+    for (Post post : posts) {
+
+      ContentValues values = new ContentValues();
+      values.put(DataBaseContract.PostTable.TITLE_COLUMN, post.getTitle());
+      values.put(DataBaseContract.PostTable.URL_COLUMN, post.getUrl());
+      values.put(DataBaseContract.PostTable.ID_COLUMN, post.getId());
+
+      database.insert(DataBaseContract.PostTable.TABLE_NAME, null, values);
+    }
+
+  }
+
+  /**
+   * Read values from DB
+   */
+  public void getPostFromDb() {
+
+    SQLiteDatabase database = sqliteOpenHelper.getReadableDatabase();
+
+    // TODO: create a new async task that reads from the DB in the main activity
+
   }
 
 }
